@@ -2,13 +2,13 @@
  * @author: Artha Prihardana 
  * @Date: 2018-04-18 00:24:58 
  * @Last Modified by: Artha Prihardana
- * @Last Modified time: 2018-04-18 00:55:39
+ * @Last Modified time: 2018-04-20 16:02:20
  */
 import express from 'express';
 
 const router = express.Router();
 
-/* GET home page. */
+/* GET info page. */
 router.get('/', function (req, res, next) {
 	res.send({
 		status: true,

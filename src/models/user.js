@@ -2,7 +2,7 @@
  * @author: Artha Prihardana 
  * @Date: 2018-04-18 11:18:15 
  * @Last Modified by: Artha Prihardana
- * @Last Modified time: 2018-04-18 11:38:43
+ * @Last Modified time: 2018-04-20 15:41:45
  */
 import validasi from '../lib/validasi';
 import mongoose from 'mongoose';
@@ -37,6 +37,10 @@ const UserSchema = new mongoose.Schema({
         enum: ["admin", "agen"],
         default: "admin",
         lowercase: true
+    },
+    area: {
+        type: mongoose.Schema.Types.ObjectId, 
+        ref: 'area'
     },
     username: {
         type: String,
