@@ -2,9 +2,11 @@
  * @author: Artha Prihardana 
  * @Date: 2018-04-18 00:24:58 
  * @Last Modified by: Artha Prihardana
- * @Last Modified time: 2018-04-20 16:02:20
+ * @Last Modified time: 2018-04-21 14:51:59
  */
 import express from 'express';
+
+import Area from './area'
 
 const router = express.Router();
 
@@ -21,5 +23,7 @@ router.get('/', function (req, res, next) {
 		}
   	});
 });
+
+router.use('/', Area);
 
 export default router;

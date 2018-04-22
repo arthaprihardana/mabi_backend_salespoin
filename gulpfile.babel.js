@@ -2,7 +2,7 @@
  * @author: Artha Prihardana 
  * @Date: 2018-04-18 00:03:35 
  * @Last Modified by: Artha Prihardana
- * @Last Modified time: 2018-04-18 00:04:44
+ * @Last Modified time: 2018-04-21 14:45:44
  */
 import gulp from 'gulp';
 import path from 'path';
@@ -21,7 +21,7 @@ const plugins = gulpLoadPlugins();
 
 const paths = {
     include: ['./**/*.js', '!dist/**', '!node_modules/**', '!gulpfile.babel.js'],
-    file: ['src/routes', 'src/controllers', 'src/helpers', 'src/models', 'src/middlewares'],
+    file: ['src/routes', 'src/class', 'src/lib', 'src/models'],
     entry: 'src/app.js'
 };
 
