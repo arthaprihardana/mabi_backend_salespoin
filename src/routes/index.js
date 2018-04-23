@@ -6,7 +6,8 @@
  */
 import express from 'express';
 
-import Area from './area'
+import Area from './area';
+import KategoriBarang from './kategoriBarang';
 
 const router = express.Router();
 
@@ -25,5 +26,6 @@ router.get('/', function (req, res, next) {
 });
 
 router.use('/', Area);
+router.use('/', KategoriBarang);
 
 export default router;

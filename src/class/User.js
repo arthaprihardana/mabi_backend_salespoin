@@ -2,15 +2,16 @@
  * @author: Artha Prihardana 
  * @Date: 2018-04-20 16:00:22 
  * @Last Modified by: Artha Prihardana
- * @Last Modified time: 2018-04-21 14:39:04
+ * @Last Modified time: 2018-04-22 20:17:05
  */
 
 import UserModel from '../models/user';
 import Auth from './Auth';
 
-class User extends Auth {
+export default class User {
     
     constructor(body) {
+        this.body = body;
         this.nama = body.nama || null;
         this.tempatLahir = body.tempatLahir || null;
         this.tanggalLahir = body.tanggalLahir || null;
@@ -43,6 +44,9 @@ class User extends Auth {
         userModel.show = this.show;
         userModel.token = this.token;
         userModel.senderId = this.senderId;
+
+        let simpan = userModel.save();
+        return simpan;
     }
 
     updateUser() {

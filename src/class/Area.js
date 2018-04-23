@@ -2,7 +2,7 @@
  * @author: Artha Prihardana 
  * @Date: 2018-04-21 14:39:20 
  * @Last Modified by: Artha Prihardana
- * @Last Modified time: 2018-04-22 14:07:31
+ * @Last Modified time: 2018-04-22 14:35:49
  */
 import AreaModel from '../models/area';
 import ObjectManipulation from './ObjectManipulation';
@@ -15,7 +15,7 @@ export default class Area {
     }
 
     createArea() {
-        let areaModel = new AreaModel();
+        const areaModel = new AreaModel();
         areaModel.namaArea = this.namaArea;
         let simpan = areaModel.save();
         return simpan;

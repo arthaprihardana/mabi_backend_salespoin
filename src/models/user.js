@@ -2,7 +2,7 @@
  * @author: Artha Prihardana 
  * @Date: 2018-04-18 11:18:15 
  * @Last Modified by: Artha Prihardana
- * @Last Modified time: 2018-04-20 15:41:45
+ * @Last Modified time: 2018-04-22 20:13:04
  */
 import validasi from '../lib/validasi';
 import mongoose from 'mongoose';
@@ -10,7 +10,18 @@ import mongoose from 'mongoose';
 const UserSchema = new mongoose.Schema({
     nama: {
         type: String,
-        required: true
+        required: [true, 'Nama user harus diisi'],
+        validate: {
+            validator: async (val) => {
+                try {
+                    let qry = await UserModel.find({ nama: val }).exec();
+                    return(qry.length == 0);
+                } catch (error) {
+                    return false;
+                }
+            },
+            message: 'Nama user {VALUE} telah terdaftar'
+        }
     },
     tempatLahir: {
         type: String
@@ -29,7 +40,7 @@ const UserSchema = new mongoose.Schema({
     },
     noHandphone: {
         type: String,
-        required: true,
+        required: [true, 'No telepon user harus diisi'],
         validate: [validasi.phone, "Silahkan masukan no handphone dengan format yang valid"]
     },
     role: {
@@ -44,11 +55,11 @@ const UserSchema = new mongoose.Schema({
     },
     username: {
         type: String,
-        required: true
+        required: [true, 'Username harus diisi']
     },
     password: {
         type: String,
-        required: true
+        required: [true, 'password harus diisi']
     },
     show: {
         type: Boolean,
@@ -67,35 +78,35 @@ const UserSchema = new mongoose.Schema({
     }
 });
 
-UserSchema.path('nama').validate((val, cb) => {
-    UserModel.find({ nama: val }, (err, docs) => {
-        if(docs.length > 0) {
-            cb(false, 'Nama user telah terdaftar');
-        } else {
-            cb(true);
-        }
-    });
-});
+// UserSchema.path('nama').validate((val, cb) => {
+//     UserModel.find({ nama: val }, (err, docs) => {
+//         if(docs.length > 0) {
+//             cb(false, 'Nama user telah terdaftar');
+//         } else {
+//             cb(true);
+//         }
+//     });
+// });
 
-UserSchema.path('email').validate((val, cb) => {
-    UserModel.find({ email: val }, (err, docs) => {
-        if(docs.length > 0) {
-            cb(false, 'Email user telah terdaftar');
-        } else {
-            cb(true);
-        }
-    });
-});
+// UserSchema.path('email').validate((val, cb) => {
+//     UserModel.find({ email: val }, (err, docs) => {
+//         if(docs.length > 0) {
+//             cb(false, 'Email user telah terdaftar');
+//         } else {
+//             cb(true);
+//         }
+//     });
+// });
 
-UserSchema.path('noHandphone').validate((val, cb) => {
-    UserModel.find({ noHandphone: val }, (err, docs) => {
-        if(docs.length > 0) {
-            cb(false, 'No Handphone user telah terdaftar');
-        } else {
-            cb(true);
-        }
-    });
-});
+// UserSchema.path('noHandphone').validate((val, cb) => {
+//     UserModel.find({ noHandphone: val }, (err, docs) => {
+//         if(docs.length > 0) {
+//             cb(false, 'No Handphone user telah terdaftar');
+//         } else {
+//             cb(true);
+//         }
+//     });
+// });
 
 const UserModel = mongoose.model('user', UserSchema);
 export default UserModel;
