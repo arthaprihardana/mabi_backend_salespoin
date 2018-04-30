@@ -18,11 +18,7 @@ export default class Auth {
     createHash() {
         return bCrypt.hashSync(this.password, bCrypt.genSaltSync(10), null);
     }
-
-    get hash() {
-        return this.createHash();
-    }
-
+    
     static compareSync(passwordFromDb) {
         return bCrypt.compareSync(this.password, passwordFromDb);
     }

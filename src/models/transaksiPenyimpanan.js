@@ -2,7 +2,7 @@
  * @author: Artha Prihardana 
  * @Date: 2018-04-20 15:44:48 
  * @Last Modified by: Artha Prihardana
- * @Last Modified time: 2018-04-20 15:58:39
+ * @Last Modified time: 2018-04-30 07:57:45
  */
 import mongoose from 'mongoose';
 
@@ -16,7 +16,9 @@ const TransaksiPenyimpananSchema = new mongoose.Schema({
         ref: 'lokasi'
     },
     statusTransaksi: {
-        type: String
+        type: String,
+        enum: ["ambil barang", "simpan barang"],
+        lowercase: true
     },
     tanggalTransksi: {
         type: Date,

@@ -1,18 +1,18 @@
 /**
  * @author: Artha Prihardana 
- * @Date: 2018-04-20 15:59:25 
+ * @Date: 2018-04-30 07:49:17 
  * @Last Modified by: Artha Prihardana
- * @Last Modified time: 2018-04-22 20:19:08
+ * @Last Modified time: 2018-04-30 08:09:27
  */
 import express from 'express';
-import User from '../class/User';
+import TransaksiPenyimpanan from '../class/TransaksiPenyimpanan';
 const router = express.Router();
 
-router.route('/user')
+router.route('/transaksi')
     .post((req, res, next) => {
         let body = req.body;
-        let setUser = new User(body);
-        let response = setUser.createUser();
+        let setTransaksi = new TransaksiPenyimpanan(body);
+        let response = setTransaksi.createTransaksi();
         response
             .then(response => {
                 res.send({
@@ -35,7 +35,7 @@ router.route('/user')
         let query = req.query;
         let limitPerPage = parseInt(query.limit) || 25;
         let page = parseInt(query.page) || 1;
-        let response = User.getUser(query);
+        let response = TransaksiPenyimpanan.getTransaksi(query);
         let getData = response[0];
         let countData = response[1];
         getData
@@ -67,8 +67,8 @@ router.route('/user')
     .put((req, res, next) => {
         let body = req.body;
         let query = req.query;
-        let user = new User(body);
-        let response = user.updateUser(query);
+        let transaksi = new TransaksiPenyimpanan(body);
+        let response = transaksi.updateTransaksi(query);
         response
             .then(response => {
                 res.send({
@@ -88,9 +88,9 @@ router.route('/user')
             });
     });
 
-router.route('/user/:_id')
+router.route('/transaksi/:_id')
     .get((req, res, next) => {
-        let response = User.getUserById(req.params);
+        let response = TransaksiPenyimpanan.getTransaksiById(req.params);
         response
             .then(response => {
                 res.send({
@@ -112,8 +112,8 @@ router.route('/user/:_id')
     .put((req, res, next) => {
         let body = req.body;
         let params = req.params;
-        let user = new User(body);
-        let response = user.updateUser(params);
+        let transaksi = new TransaksiPenyimpanan(body);
+        let response = transaksi.updateTransaksi(params);
         response
             .then(response => {
                 res.send({

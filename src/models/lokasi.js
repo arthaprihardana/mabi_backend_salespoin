@@ -2,10 +2,14 @@
  * @author: Artha Prihardana 
  * @Date: 2018-04-18 13:33:42 
  * @Last Modified by: Artha Prihardana
- * @Last Modified time: 2018-04-20 15:35:31
+ * @Last Modified time: 2018-04-29 23:45:56
  */
 import mongoose from 'mongoose';
 import config from '../app.conf';
+import ConversionMeasure from '../lib/ConversionMeasure';
+
+const conversion = new ConversionMeasure(config.RADIUS, "miles");
+const radius = conversion.convertToMeters();
 
 const LokasiSchema = new mongoose.Schema({
     namaLokasi: {
@@ -29,8 +33,26 @@ const LokasiSchema = new mongoose.Schema({
             type: String
         },
         location: {
-            type: [Number],
-            index: '2dsphere'
+            type: [Number], 
+            index:'2dsphere',
+            validate: {
+                validator: async (val) => {
+                    try {
+                        let qry = await LokasiModel.find({
+                            'gmaps.location': {
+                                $geoWithin: {
+                                    $centerSphere: [ val, parseFloat(config.RADIUS) / parseFloat(config.EARTH_RADIUS) ]
+                                }
+                            }
+                        }).exec();
+                        return (qry.length == 0);
+                    } catch (error) {
+                        return false;
+                    }
+                },
+                message: 'Dalam radius '+radius+' dari koordinat {VALUE} telah terdaftar tempat penyimpanan yang dilakukan oleh agen'
+            },
+            default: [0, 0]
         },
         administrative_area_level_1: {
             type: String
@@ -62,6 +84,10 @@ const LokasiSchema = new mongoose.Schema({
         locale: {
             type: String
         }
+    },
+    agen: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'user'
     }
 }, {
     timestamps: {
@@ -70,21 +96,21 @@ const LokasiSchema = new mongoose.Schema({
     }
 });
 
-LokasiSchema.path('gmaps.location').validate(( val, cb ) => {
-    LokasiModel.find({
-        'gmaps.location': {
-            $geoWithin: {
-                $centerSphere: [ val.split(',').map(Number), parseFloat(config.RADIUS)/parseFloat(config.EARTH_RADIUS) ]
-            }
-        }
-    }, (err, docs) => {
-        if(docs.length > 0) {
-            cb(false, 'Lokasi dengan radius tersebut telah terdaftar di daerah ini');
-        } else {
-            cb(true);
-        }
-    });
-});
+// LokasiSchema.path('gmaps.location').validate(( val, cb ) => {
+    // LokasiModel.find({
+    //     'gmaps.location': {
+    //         $geoWithin: {
+    //             $centerSphere: [ val.split(',').map(Number), parseFloat(config.RADIUS)/parseFloat(config.EARTH_RADIUS) ]
+    //         }
+    //     }
+    // }, (err, docs) => {
+//         if(docs.length > 0) {
+//             cb(false, 'Lokasi dengan radius tersebut telah terdaftar di daerah ini');
+//         } else {
+//             cb(true);
+//         }
+//     });
+// });
 
 const LokasiModel = mongoose.model('lokasi', LokasiSchema);
 export default LokasiModel;

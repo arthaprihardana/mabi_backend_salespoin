@@ -2,12 +2,15 @@
  * @author: Artha Prihardana 
  * @Date: 2018-04-18 00:24:58 
  * @Last Modified by: Artha Prihardana
- * @Last Modified time: 2018-04-21 14:51:59
+ * @Last Modified time: 2018-04-30 07:53:26
  */
 import express from 'express';
 
 import Area from './area';
 import KategoriBarang from './kategoriBarang';
+import User from './user';
+import Lokasi from './lokasi';
+import Transaksi from './transaksiPenyimpanan';
 
 const router = express.Router();
 
@@ -27,5 +30,8 @@ router.get('/', function (req, res, next) {
 
 router.use('/', Area);
 router.use('/', KategoriBarang);
+router.use('/', User);
+router.use('/', Lokasi);
+router.use('/', Transaksi);
 
 export default router;

@@ -36,12 +36,41 @@ const UserSchema = new mongoose.Schema({
         type: String,
         lowercase: true,
         unique: true,
-        validate: [validasi.email, "Silahkan masukan alamat email dengan format yang valid"]
+        validate: [{
+                validator: validasi.email,
+                message: 'Silahkan masukan alamat email dengan format yang valid'
+            },{
+                validator: async (val) => {
+                    try {
+                        let qry = await UserModel.find({ email: val }).exec();
+                        return(qry.length == 0);
+                    } catch (error) {
+                        return false;
+                    }
+                },
+                message: 'Email user {VALUE} telah terdaftar'
+            }
+        ]
+        // validate: [validasi.email, "Silahkan masukan alamat email dengan format yang valid"]
     },
     noHandphone: {
         type: String,
         required: [true, 'No telepon user harus diisi'],
-        validate: [validasi.phone, "Silahkan masukan no handphone dengan format yang valid"]
+        validate: [{
+            validator: validasi.phone,
+            message: 'Silahkan masukan no handphone dengan format yang valid'
+        }, {
+            validator: async (val) => {
+                try {
+                    let qry = await UserModel.find({ noHandphone: val }).exec();
+                    return(qry.length == 0);
+                } catch (error) {
+                    return false;
+                }
+            },
+            message: 'No Handphone user {VALUE} telah terdaftar'
+        }]
+        // validate: [validasi.phone, "Silahkan masukan no handphone dengan format yang valid"]
     },
     role: {
         type: String,
@@ -77,36 +106,6 @@ const UserSchema = new mongoose.Schema({
         updatedAt: 'updated_at'
     }
 });
-
-// UserSchema.path('nama').validate((val, cb) => {
-//     UserModel.find({ nama: val }, (err, docs) => {
-//         if(docs.length > 0) {
-//             cb(false, 'Nama user telah terdaftar');
-//         } else {
-//             cb(true);
-//         }
-//     });
-// });
-
-// UserSchema.path('email').validate((val, cb) => {
-//     UserModel.find({ email: val }, (err, docs) => {
-//         if(docs.length > 0) {
-//             cb(false, 'Email user telah terdaftar');
-//         } else {
-//             cb(true);
-//         }
-//     });
-// });
-
-// UserSchema.path('noHandphone').validate((val, cb) => {
-//     UserModel.find({ noHandphone: val }, (err, docs) => {
-//         if(docs.length > 0) {
-//             cb(false, 'No Handphone user telah terdaftar');
-//         } else {
-//             cb(true);
-//         }
-//     });
-// });
 
 const UserModel = mongoose.model('user', UserSchema);
 export default UserModel;

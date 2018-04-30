@@ -1,18 +1,18 @@
 /**
  * @author: Artha Prihardana 
- * @Date: 2018-04-20 15:59:25 
+ * @Date: 2018-04-29 21:52:35 
  * @Last Modified by: Artha Prihardana
- * @Last Modified time: 2018-04-22 20:19:08
+ * @Last Modified time: 2018-04-30 00:07:46
  */
 import express from 'express';
-import User from '../class/User';
+import Lokasi from '../class/Lokasi';
 const router = express.Router();
 
-router.route('/user')
+router.route('/lokasi')
     .post((req, res, next) => {
         let body = req.body;
-        let setUser = new User(body);
-        let response = setUser.createUser();
+        let setLokasi = new Lokasi(body);
+        let response = setLokasi.createLokasi();
         response
             .then(response => {
                 res.send({
@@ -35,7 +35,7 @@ router.route('/user')
         let query = req.query;
         let limitPerPage = parseInt(query.limit) || 25;
         let page = parseInt(query.page) || 1;
-        let response = User.getUser(query);
+        let response = Lokasi.getLokasi(query);
         let getData = response[0];
         let countData = response[1];
         getData
@@ -67,8 +67,8 @@ router.route('/user')
     .put((req, res, next) => {
         let body = req.body;
         let query = req.query;
-        let user = new User(body);
-        let response = user.updateUser(query);
+        let lokasi = new Lokasi(body);
+        let response = lokasi.updateLokasi(query);
         response
             .then(response => {
                 res.send({
@@ -87,10 +87,10 @@ router.route('/user')
                 });
             });
     });
-
-router.route('/user/:_id')
+    
+router.route('/lokasi/:_id')
     .get((req, res, next) => {
-        let response = User.getUserById(req.params);
+        let response = Lokasi.getLokasiById(req.params);
         response
             .then(response => {
                 res.send({
@@ -112,8 +112,8 @@ router.route('/user/:_id')
     .put((req, res, next) => {
         let body = req.body;
         let params = req.params;
-        let user = new User(body);
-        let response = user.updateUser(params);
+        let lokasi = new Lokasi(body);
+        let response = lokasi.updateLokasi(params);
         response
             .then(response => {
                 res.send({
