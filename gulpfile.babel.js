@@ -21,7 +21,7 @@ const plugins = gulpLoadPlugins();
 
 const paths = {
     include: ['./**/*.js', '!dist/**', '!node_modules/**', '!gulpfile.babel.js'],
-    file: ['src/routes', 'src/class', 'src/lib', 'src/models'],
+    file: ['src/class', 'src/lib', 'src/models', 'src/routes'],
     entry: 'src/app.js'
 };
 

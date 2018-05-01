@@ -15,6 +15,7 @@ import methodOverride from 'method-override';
 import cors from 'cors';
 import mongoose from 'mongoose';
 import logSymbols from 'log-symbols';
+import 'babel-polyfill';
 
 import config from './app.conf';
 import routes from './routes';
