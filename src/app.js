@@ -2,7 +2,7 @@
  * @author: Artha Prihardana 
  * @Date: 2018-04-18 00:07:34 
  * @Last Modified by: Artha Prihardana
- * @Last Modified time: 2018-04-18 00:53:59
+ * @Last Modified time: 2018-05-01 13:03:12
  */
 import express from 'express';
 import path from 'path';
@@ -15,6 +15,7 @@ import methodOverride from 'method-override';
 import cors from 'cors';
 import mongoose from 'mongoose';
 import logSymbols from 'log-symbols';
+import middlewares from './lib/middleware';
 import 'babel-polyfill';
 
 import config from './app.conf';
@@ -39,6 +40,9 @@ const normalizePort = (val) => {
 	return false;
 }
 
+// middlewares
+app.all(config.API_VERSION+'/auth/*', [middlewares]);
+
 app.set('port', normalizePort(process.env.PORT || config.API_PORT));
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -49,7 +53,6 @@ app.use(compress());
 app.use(cors());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/images', express.static('public/images'));
-
 app.use(`${config.API_VERSION}`, routes);
 
 // catch 404 and forward to error handler

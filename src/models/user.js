@@ -36,6 +36,7 @@ const UserSchema = new mongoose.Schema({
         type: String,
         lowercase: true,
         unique: true,
+        required: true,
         validate: [{
                 validator: validasi.email,
                 message: 'Silahkan masukan alamat email dengan format yang valid'

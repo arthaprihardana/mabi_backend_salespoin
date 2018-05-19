@@ -19,9 +19,9 @@
     "start:test": "babel-node src/app.js",
     "bundle": "gulp bundle",
     "bundle:min": "gulp bundle && uglifyjs dist/app.js -o dist/app.min.js -c -m",
-    "pm2:start": "pm2 start ./dist/app.min.js --name api",
-    "pm2:stop": "pm2 stop ./dist/app.min.js --name api",
-    "pm2:restart": "pm2 restart ./dist/app.min.js --name api"
+    "pm2:start": "pm2 start ./dist/app.min.js --name api_mabi_salespoin_3000",
+    "pm2:stop": "pm2 stop ./dist/app.min.js --name api_mabi_salespoin_3000",
+    "pm2:restart": "pm2 restart ./dist/app.min.js --name api_mabi_salespoin_3000"
   },
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",
@@ -39,6 +39,7 @@
     "moment": "^2.22.1",
     "mongoose": "^5.0.15",
     "morgan": "^1.9.0",
+    "nodemailer": "^4.6.4",
     "passport": "^0.4.0",
     "passport-http-bearer": "^1.0.1"
   },

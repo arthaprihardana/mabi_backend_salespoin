@@ -2,11 +2,11 @@
  * @author: Artha Prihardana 
  * @Date: 2018-04-18 13:33:42 
  * @Last Modified by: Artha Prihardana
- * @Last Modified time: 2018-04-29 23:45:56
+ * @Last Modified time: 2018-05-01 22:11:53
  */
 import mongoose from 'mongoose';
 import config from '../app.conf';
-import ConversionMeasure from '../lib/ConversionMeasure';
+import ConversionMeasure from '../lib/conversionMeasure';
 
 const conversion = new ConversionMeasure(config.RADIUS, "miles");
 const radius = conversion.convertToMeters();

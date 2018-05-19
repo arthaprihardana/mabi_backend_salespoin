@@ -2,7 +2,7 @@
  * @author: Artha Prihardana 
  * @Date: 2018-04-20 16:00:22 
  * @Last Modified by: Artha Prihardana
- * @Last Modified time: 2018-04-30 08:12:17
+ * @Last Modified time: 2018-05-01 21:20:20
  */
 
 import moment from 'moment';
@@ -23,8 +23,8 @@ export default class User {
         this.noHandphone = body.noHandphone || null;
         this.role = body.role || null;
         this.area = body.area || null;
-        this.username = body.username || null;
-        this.password = body.password || null;
+        this.username = body.nama != undefined ? Auth.generateUsername(body.nama) : null;
+        this.password = body.nama != undefined ? Auth.generatePassword() : null;
         this.show = body.show || null;
         this.token = body.token || null;
         this.senderId = body.senderId || null;
@@ -49,7 +49,7 @@ export default class User {
         userModel.senderId = this.senderId;
 
         let simpan = userModel.save();
-        return simpan;
+        return [simpan, { username : this.username, password: this.password}];
     }
 
     updateUser(query) {
@@ -101,5 +101,23 @@ export default class User {
     static getUserById(params) {
         let getData = UserModel.findOne({ _id: params._id }).populate({ path: 'area', select: 'namaArea' }).exec();
         return getData;
+    }
+
+    static login(data) {
+        let username = data.username;
+        let password = data.password;
+        let find = UserModel.findOne({
+            $and: [{
+                $or: [{
+                    username: username
+                }, {
+                    email: username
+                }, {
+                    nama: username
+                }],
+                show: true
+            }]
+        }).populate({path: 'area', select: 'namaArea'}).exec();
+        return find;
     }
 }

@@ -5,6 +5,8 @@
  * @Last Modified time: 2018-04-30 07:53:26
  */
 import express from 'express';
+import mongoose from 'mongoose';
+import config from '../app.conf';
 
 import Area from './area';
 import KategoriBarang from './kategoriBarang';
@@ -15,7 +17,7 @@ import Transaksi from './transaksiPenyimpanan';
 const router = express.Router();
 
 /* GET info page. */
-router.get('/', function (req, res, next) {
+router.get('/', (req, res, next) => {
 	res.send({
 		status: true,
 		statusCode: res.statusCode,
@@ -27,6 +29,21 @@ router.get('/', function (req, res, next) {
 		}
   	});
 });
+
+router.get('/testConnection', (req, res, next) => {
+	mongoose.connect(config.DATABASE, config.DB_AUTH, (error) => {
+		if(error) {
+			res.send({
+				error: error
+			})
+		} else {
+			res.send({
+				message: "DB CONNECTED"
+			})
+		}
+		// Check error in initial connection. There is no 2nd param to the callback.
+	});
+})
 
 router.use('/', Area);
 router.use('/', KategoriBarang);
