@@ -6,9 +6,10 @@
  */
 import express from 'express';
 import Area from '../class/Area';
+import cors from 'cors';
 const router = express.Router();
 
-router.route('/area')
+router.route('/auth/area')
     .post((req, res, next) => {
         let body = req.body;
         let setArea = new Area(body);
@@ -88,7 +89,7 @@ router.route('/area')
             });
     });
 
-router.route('/area/:_id')
+router.route('/auth/area/:_id')
     .get((req, res, next) => {
         let response = Area.getAreaById(req.params);
         response

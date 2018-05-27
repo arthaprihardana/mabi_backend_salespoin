@@ -21,22 +21,23 @@ router.route('/register')
         let info = createUser[1];
         response
             .then(response => {
-                process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
-                let transporter = nodemailer.createTransport(config.SMTP_CONFIG);
-                let mailOption = {
-                    from: '"Admin Sales Poin " <arthaprihardana@gmail.com>',
-                    to: response.email,
-                    subject: 'Username dan Password Agen',
-                    text: 'Username dan Password Agen', 
-                    html: emailTemplate.template(info)
-                }
-                transporter.sendMail(mailOption, (error, info) => {
-                    if(error) {
-                        console.log('error mail ==>', error);
-                    }
-                    console.log('Message sent: %s', info.messageId);
-                    console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
-                });
+                console.log('info ==>', info);
+                // process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+                // let transporter = nodemailer.createTransport(config.SMTP_CONFIG);
+                // let mailOption = {
+                //     from: '"Admin Sales Poin " <arthaprihardana@gmail.com>',
+                //     to: response.email,
+                //     subject: 'Username dan Password Agen',
+                //     text: 'Username dan Password Agen', 
+                //     html: emailTemplate.template(info)
+                // }
+                // transporter.sendMail(mailOption, (error, info) => {
+                //     if(error) {
+                //         console.log('error mail ==>', error);
+                //     }
+                //     console.log('Message sent: %s', info.messageId);
+                //     console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
+                // });
                 res.send({
                     status: true,
                     statusCode: res.statusCode,

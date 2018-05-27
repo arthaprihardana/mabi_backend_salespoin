@@ -22,6 +22,9 @@ import config from './app.conf';
 import routes from './routes';
 
 mongoose.connect(config.DATABASE, config.DB_AUTH);
+mongoose.connection.once('open', () => {
+	console.log(`${logSymbols.success} Database connected`);
+});
 mongoose.Promise = require('bluebird');
 
 const app = express();
@@ -40,9 +43,6 @@ const normalizePort = (val) => {
 	return false;
 }
 
-// middlewares
-app.all(config.API_VERSION+'/auth/*', [middlewares]);
-
 app.set('port', normalizePort(process.env.PORT || config.API_PORT));
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -53,7 +53,11 @@ app.use(compress());
 app.use(cors());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/images', express.static('public/images'));
+app.options('*', cors());
 app.use(`${config.API_VERSION}`, routes);
+
+// middlewares
+app.all(config.API_VERSION+'/auth/*', [middlewares]);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

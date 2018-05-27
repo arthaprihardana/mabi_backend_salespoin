@@ -5,12 +5,13 @@
  * @Last Modified time: 2018-04-21 14:19:54
  */
 export default {
-    // API_URL: "http://localhost",
-    API_URL: "188.166.174.221",
+    // API_URL: "http://192.168.1.143",
+    API_URL: "http://localhost",
+    // API_URL: "188.166.174.221",
     API_PORT: 3000,
     API_VERSION: "/api/v1",
-    // DATABASE: 'mongodb://localhost:27017/mabi_salespoin',
-    DATABASE: 'mongodb://mabi:d4127ha@188.166.174.221:27017/mabi_salespoin',
+    DATABASE: 'mongodb://localhost:27017/mabi_salespoin',
+    // DATABASE: 'mongodb://mabi:d4127ha@localhost:27017/mabi_salespoin',
     SECRET_KEY: "rahasiabangetpokonya",
     DB_AUTH: {
         autoIndex: false,

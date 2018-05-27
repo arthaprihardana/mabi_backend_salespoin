@@ -8,7 +8,7 @@ import express from 'express';
 import TransaksiPenyimpanan from '../class/TransaksiPenyimpanan';
 const router = express.Router();
 
-router.route('/transaksi')
+router.route('/auth/transaksi')
     .post((req, res, next) => {
         let body = req.body;
         let setTransaksi = new TransaksiPenyimpanan(body);
@@ -88,7 +88,7 @@ router.route('/transaksi')
             });
     });
 
-router.route('/transaksi/:_id')
+router.route('/auth/transaksi/:_id')
     .get((req, res, next) => {
         let response = TransaksiPenyimpanan.getTransaksiById(req.params);
         response

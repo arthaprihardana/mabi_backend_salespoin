@@ -8,7 +8,7 @@ import express from 'express';
 import Lokasi from '../class/Lokasi';
 const router = express.Router();
 
-router.route('/lokasi')
+router.route('/auth/lokasi')
     .post((req, res, next) => {
         let body = req.body;
         let setLokasi = new Lokasi(body);
@@ -88,7 +88,7 @@ router.route('/lokasi')
             });
     });
     
-router.route('/lokasi/:_id')
+router.route('/auth/lokasi/:_id')
     .get((req, res, next) => {
         let response = Lokasi.getLokasiById(req.params);
         response

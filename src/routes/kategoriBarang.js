@@ -8,7 +8,7 @@ import express from 'express';
 import KategoriBarang from '../class/KategoriBarang';
 const router = express.Router();
 
-router.route('/kategoribarang')
+router.route('/auth/kategoribarang')
     .post((req, res, next) => {
         let body = req.body;
         let setKategori = new KategoriBarang(body);
@@ -88,7 +88,7 @@ router.route('/kategoribarang')
             });
     });
 
-router.route('/kategoribarang/:_id')
+router.route('/auth/kategoribarang/:_id')
     .get((req, res, next) => {
         let response = KategoriBarang.getKategoriById(req.params);
         response
