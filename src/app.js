@@ -54,10 +54,10 @@ app.use(cors());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/images', express.static('public/images'));
 app.options('*', cors());
-app.use(`${config.API_VERSION}`, routes);
 
 // middlewares
 app.all(config.API_VERSION+'/auth/*', [middlewares]);
+app.use(`${config.API_VERSION}`, routes);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
