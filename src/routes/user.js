@@ -204,31 +204,40 @@ router.route('/login')
         let login = User.login({username: body.username, password: body.password});
         login
             .then(response => {
-                let auth = new Auth(body.username, body.password);
-                let passwordValidate = auth.compareSync(response.password);
-                if(passwordValidate) {
-                    let token = auth.generateToken();
-                    let user = new User({token: token.token});
-                    let updateUser = user.updateUser({_id: response._id });
-                    res.send({
-                        status: true,
-                        statusCode: res.statusCode,
-                        options: token,
-                        data: {
-                            nama: response.nama,
-                            username: response.username,
-                            email: response.email,
-                            noHandphone: response.noHandphone,
-                            role: response.role,
-                            area: response.role == "agen" ? response.area.namaArea : "",
-                        }
-                    });
+                if(response.status) {
+                    let auth = new Auth(body.username, body.password);
+                    let passwordValidate = auth.compareSync(response.password);
+                    if(passwordValidate) {
+                        let token = auth.generateToken();
+                        let user = new User({token: token.token});
+                        let updateUser = user.updateUser({_id: response._id });
+                        res.send({
+                            status: true,
+                            statusCode: res.statusCode,
+                            options: token,
+                            data: {
+                                nama: response.nama,
+                                username: response.username,
+                                email: response.email,
+                                noHandphone: response.noHandphone,
+                                role: response.role,
+                                area: response.role == "agen" ? response.area.namaArea : "",
+                            }
+                        });
+                    } else {
+                        res.send({
+                            status: false,
+                            statusCode: res.statusCode,
+                            options: {},
+                            errMessage: "Password yang anda masukan salah"
+                        });
+                    }
                 } else {
                     res.send({
                         status: false,
                         statusCode: res.statusCode,
                         options: {},
-                        errMessage: "Password yang anda masukan salah"
+                        errMessage: "Username yang anda masukan salah"
                     });
                 }
             })
