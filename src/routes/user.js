@@ -204,7 +204,8 @@ router.route('/login')
         let login = User.login({username: body.username, password: body.password});
         login
             .then(response => {
-                if(response.status) {
+                console.log('response ==>', response);
+                if(response != null) {
                     let auth = new Auth(body.username, body.password);
                     let passwordValidate = auth.compareSync(response.password);
                     if(passwordValidate) {
