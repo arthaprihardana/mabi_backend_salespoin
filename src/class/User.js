@@ -106,6 +106,7 @@ export default class User {
     static login(data) {
         let username = data.username;
         let password = data.password;
+        let role = data.role;
         let find = UserModel.findOne({
             $and: [{
                 $or: [{
@@ -115,6 +116,7 @@ export default class User {
                 }, {
                     nama: username
                 }],
+                role: role,
                 show: true
             }]
         }).populate({path: 'area', select: 'namaArea'}).exec();

@@ -14,6 +14,7 @@ export default class TransaksiPenyimpanan {
         this.kategoriBarang = body.kategoriBarang;
         this.lokasi = body.lokasi;
         this.statusTransaksi = body.statusTransaksi;
+        this.namaAgen = body.namaAgen;
     }
 
     createTransaksi() {
@@ -21,6 +22,7 @@ export default class TransaksiPenyimpanan {
         transaksiModel.kategoriBarang = this.kategoriBarang;
         transaksiModel.lokasi = this.lokasi;
         transaksiModel.statusTransaksi = this.statusTransaksi;
+        transaksiModel.namaAgen = this.namaAgen;
         let simpan = transaksiModel.save();
         return simpan;
     }
@@ -45,7 +47,12 @@ export default class TransaksiPenyimpanan {
                 ]
             };
         }
-        let getData = TransaksiPenyimpananModel.find(find).populate({ path: 'kategoriBarang', select: 'kategori' }).populate({ path: 'lokasi', populate: ({ path: 'agen', select: ['nama', 'noHandphone', 'email'] }) }).limit(limitPerPage).skip(limitPerPage * (page - 1)).exec();
+        let getData = TransaksiPenyimpananModel
+                        .find(find)
+                        .populate({ path: 'kategoriBarang', select: 'kategori' })
+                        .populate({ path: 'lokasi', populate: ({ path: 'agen', select: ['nama', 'noHandphone', 'email'] }) })
+                        .populate({ path: 'namaAgen', select: ['nama', 'email', 'noHandphone', 'senderId'] })
+                        .limit(limitPerPage).skip(limitPerPage * (page - 1)).exec();
         let dataCount = TransaksiPenyimpananModel.count(find).exec();
         return [getData, dataCount];
     }

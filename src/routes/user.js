@@ -201,10 +201,10 @@ router.route('/user/:_id')
 router.route('/login')
     .post((req, res, next) => {
         let body = req.body;
-        let login = User.login({username: body.username, password: body.password});
+        console.log('body ==>', body);
+        let login = User.login({username: body.username, password: body.password, role: body.role});
         login
             .then(response => {
-                console.log('response ==>', response);
                 if(response != null) {
                     let auth = new Auth(body.username, body.password);
                     let passwordValidate = auth.compareSync(response.password);
@@ -217,6 +217,7 @@ router.route('/login')
                             statusCode: res.statusCode,
                             options: token,
                             data: {
+                                _id: response._id,
                                 nama: response.nama,
                                 username: response.username,
                                 email: response.email,

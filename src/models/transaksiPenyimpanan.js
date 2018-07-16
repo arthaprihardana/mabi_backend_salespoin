@@ -20,6 +20,10 @@ const TransaksiPenyimpananSchema = new mongoose.Schema({
         enum: ["ambil barang", "simpan barang"],
         lowercase: true
     },
+    namaAgen: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'user'
+    },
     tanggalTransksi: {
         type: Date,
         default: Date.now
